@@ -89,4 +89,29 @@ class ProductController extends AbstractController
         $em->flush();
         return new Response ("Product with  id ".$id ." was updated. New product name is: " .$product->getName(), Response::HTTP_OK );
     }
+
+    /**
+     * @Route("/remove", name="remove")
+     * @param Request $request
+     * @return Response
+     */
+    public function removeProduct(Request $request)
+    {
+        $id = $request->query->get("id");
+
+        $em = $this->getDoctrine()->getManager();
+        $product = $em->getRepository(Product::class)
+                ->find($id);
+
+        if(!$product){
+            throw $this->createNotFoundException(
+                'No product found for id '.$id
+            );
+        }
+        $em->remove($product);
+        $em->flush();
+
+        return new Response("Product with id ".$id." has been removed from the database.");
+    }
+    
 }
