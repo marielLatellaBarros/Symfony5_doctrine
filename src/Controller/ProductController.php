@@ -113,5 +113,29 @@ class ProductController extends AbstractController
 
         return new Response("Product with id ".$id." has been removed from the database.");
     }
-    
+
+    /**
+     * @Route("/productPrice", name="greaterThanPrice")
+     * @param Request $request
+     * @return Response
+     */
+    public function findAllGreaterThanPrice(Request $request)
+    {
+        $price = $request->query->get("price");
+
+        $em = $this->getDoctrine()->getManager();
+        $products = $em->getRepository(Product::class)
+            ->findAllGreaterThanPrice($price);
+
+        if(!$products){
+            throw $this->createNotFoundException(
+                'No products found for price greater than '.$price
+            );
+        }
+        //        return new Response("Found products: ". implode($products, ', '));
+        return $this->render(
+            'product/findAll.html.twig', ["products" => $products]);
+
+    }
+
 }
