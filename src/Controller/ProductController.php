@@ -65,4 +65,28 @@ class ProductController extends AbstractController
             return $this->render(
                 'product/findAll.html.twig', ["products" => $products]);
     }
+
+    /**
+     * @Route("/edit", name="edit")
+     * @param Request $request
+     * @return Response
+     */
+    public function editProduct(Request $request)
+    {
+        $id = $request->query->get("id");
+
+        $em = $this->getDoctrine()->getManager();
+        $product = $em->getRepository(Product::class)
+            ->find($id);
+
+        if (!$product)
+        {
+            throw $this->createNotFoundException(
+                'No product found for id '.$id
+            );
+        }
+        $product->setName('MEGA Keyboard!');
+        $em->flush();
+        return new Response ("Product with  id ".$id ." was updated. New product name is: " .$product->getName(), Response::HTTP_OK );
+    }
 }
