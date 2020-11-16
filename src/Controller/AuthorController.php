@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Author;
 use App\Entity\Message;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -50,6 +51,19 @@ class AuthorController extends AbstractController
             ]);
     }
 
+    /**
+     * @Route("/showAuthor")
+     * @param Request $request
+     * @return Response
+     */
+    public function showAuthorAction(Request $request)
+    {
+        $id=$request->query->get("id");
 
-
+        $author = $this->getDoctrine()
+            ->getRepository(Author::class)
+            ->find($id);
+        return $this->render('author/show.html.twig',
+            [ 'author' => $author,]);
+    }
 }
