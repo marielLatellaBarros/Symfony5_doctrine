@@ -51,4 +51,18 @@ class ProductController extends AbstractController
             return new Response("Sorry, product with id ".$id ." was  not found :(", Response::HTTP_NOT_FOUND);
         }
     }
+
+    /**
+     * @Route("/all", name="allProducts")
+     * @return Response
+     */
+    public function findAll()
+    {
+        $products = $this->getDoctrine()
+            ->getRepository(Product::class)
+            ->findAll();
+
+            return $this->render(
+                'product/findAll.html.twig', ["products" => $products]);
+    }
 }
