@@ -55,4 +55,9 @@ class Message
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->getId(). "" . $this->author->getName() . ", ".$this->getContents();
+    }
 }

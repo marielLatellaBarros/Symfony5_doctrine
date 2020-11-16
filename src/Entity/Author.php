@@ -31,6 +31,7 @@ class Author
 
     public function __construct()
     {
+        //initialize $messages object when author is created
         $this->messages = new ArrayCollection();
     }
 
@@ -79,5 +80,10 @@ class Author
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getId(). "" . $this->getName(). ", ".$this->getMessages();
     }
 }
