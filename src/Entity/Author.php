@@ -84,6 +84,6 @@ class Author
 
     public function __toString()
     {
-        return $this->getId(). "" . $this->getName(). ", ".$this->getMessages();
+        return $this->getName();
     }
 }

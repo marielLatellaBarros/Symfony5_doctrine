@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add author{% endblock %}
+
+{% block body %}
+    <h1>Author added</h1>
+    {% if author %}
+        <h2>Author id and name: {{ author.id }} {{ author.name }}</h2>
+        <ul>{% for m in messages %}
+                <li>Message id: {{ m.id}} Content: {{m.contents}}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Sorry, no messages were found!</p>
+    {% endif %}
+
+{% endblock %}
